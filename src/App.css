@@ -1,0 +1,91 @@
+/* General Styles */
+.App {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container Styles */
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Toolbar Styles */
+.toolbar {
+  position: center; /* Removed, not a valid position value */
+  top: 0;
+  background-color: grey;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.toolbar button {
+  background-color: whitesmoke;
+  color: grey;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.toolbar button:hover {
+  background-color: rgba(96, 85, 100, 0.384);
+}
+
+
+
+textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Counts Styles */
+.counts {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.counts span {
+  font-weight: bold;
+}
+
+/* Button Styles */
+div > button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+div > button:hover {
+  background-color: #555;
+}
+
+.heading-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.heading-dropdown:hover .heading-dropdown-content {
+  display: block;
+}
