@@ -1,4 +1,3 @@
-// src/components/App.js
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import IconButton from '@mui/material/IconButton';
@@ -39,14 +38,8 @@ function App() {
   }, [markdown]);
 
   useEffect(() => {
-    // Focus on the textarea when the component mounts
     textareaRef.current.focus();
   }, []);
-
-  const handleSaveClick = () => {
-    // Perform save operation (e.g., save to a file or API)
-    alert('Content saved!');
-  };
 
   const handleClearClick = () => {
     setMarkdown('');
@@ -72,65 +65,49 @@ function App() {
   const handleBoldClick = () => {
     const textarea = textareaRef.current;
     const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-  
+
     if (selectedText) {
-      // Wrap the selected text with bold markdown syntax
       const boldText = `**${selectedText}**`;
-  
-      // Insert the modified text back into the textarea at the selected position
       insertTextAtCursor(boldText);
-  
-      // Move the cursor to the end of the inserted text
       setTimeout(() => {
         const cursorPos = textarea.selectionStart + boldText.length - 2;
         textarea.setSelectionRange(cursorPos, cursorPos);
         textarea.focus();
       }, 10);
     } else {
-      // If no text is selected, insert the bold markdown syntax at the cursor position
       insertTextAtCursor('****');
-  
-      // Move the cursor between the two stars
       setTimeout(() => {
-        const cursorPos = textareaRef.current.selectionStart - 2; // Adjusted here
+        const cursorPos = textareaRef.current.selectionStart - 2;
         textareaRef.current.setSelectionRange(cursorPos, cursorPos);
         textareaRef.current.focus();
       }, 10);
     }
   };
-  
-  
+
+
 
   const handleItalicClick = () => {
     const textarea = textareaRef.current;
     const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-  
+
     if (selectedText) {
-      // Wrap the selected text with bold markdown syntax
       const boldText = `*${selectedText}*`;
-  
-      // Insert the modified text back into the textarea at the selected position
       insertTextAtCursor(boldText);
-  
-      // Move the cursor to the end of the inserted text
       setTimeout(() => {
         const cursorPos = textarea.selectionStart + boldText.length - 1;
         textarea.setSelectionRange(cursorPos, cursorPos);
         textarea.focus();
       }, 10);
     } else {
-      // If no text is selected, insert the bold markdown syntax at the cursor position
       insertTextAtCursor('**');
-  
-      // Move the cursor between the two stars
       setTimeout(() => {
-        const cursorPos = textareaRef.current.selectionStart - 1; // Adjusted here
+        const cursorPos = textareaRef.current.selectionStart - 1;
         textareaRef.current.setSelectionRange(cursorPos, cursorPos);
         textareaRef.current.focus();
       }, 10);
     }
   };
-  
+
   // const handleListClick = (type) => {
   //   const listType = type === 'ordered' ? '1. ' : '- ';
   //   insertTextAtCursor(`\n${listType} List item`);
@@ -139,18 +116,18 @@ function App() {
   const handleListClick = (type) => {
     let listType;
     let listSymbol;
-  
+
     if (type === 'ordered') {
       listType = '1. ';
       listSymbol = '';
     } else {
       listType = '- ';
-      listSymbol = '•'; 
+      listSymbol = '•';
     }
-  
+
     insertTextAtCursor(`\n${listType} List item`, listSymbol);
   };
-  
+
 
   const handleLinkClick = () => {
     insertTextAtCursor('[Link Text](https://example.com)');
@@ -163,27 +140,19 @@ function App() {
   const handleCodeBlockClick = () => {
     const textarea = textareaRef.current;
     const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-  
+
     if (selectedText) {
-      // Wrap the selected text with bold markdown syntax
       const boldText = `${selectedText}`;
-  
-      // Insert the modified text back into the textarea at the selected position
       insertTextAtCursor(boldText);
-  
-      // Move the cursor to the end of the inserted text
       setTimeout(() => {
         const cursorPos = textarea.selectionStart + boldText.length - 1;
         textarea.setSelectionRange(cursorPos, cursorPos);
         textarea.focus();
       }, 10);
     } else {
-      // If no text is selected, insert the bold markdown syntax at the cursor position
       insertTextAtCursor('``');
-  
-      // Move the cursor between the two stars
       setTimeout(() => {
-        const cursorPos = textareaRef.current.selectionStart - 1; // Adjusted here
+        const cursorPos = textareaRef.current.selectionStart - 1;
         textareaRef.current.setSelectionRange(cursorPos, cursorPos);
         textareaRef.current.focus();
       }, 10);
@@ -235,53 +204,44 @@ function App() {
     const newContent = `${'#'.repeat(level)} `;
     const textarea = textareaRef.current;
     const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-  
+
     insertTextAtCursor(newContent);
     setHeadingAnchorEl(null);
     if (selectedText) {
-      // Wrap the selected text with bold markdown syntax
       const boldText = `${'#'.repeat(level)} ${selectedText} `
-  
-      // Insert the modified text back into the textarea at the selected position
       insertTextAtCursor(boldText);
-  
-      // Move the cursor to the end of the inserted text
       setTimeout(() => {
         const cursorPos = textarea.selectionStart + boldText.length - 1;
         textarea.setSelectionRange(cursorPos, cursorPos);
         textarea.focus();
       }, 10);
-    } 
+    }
   };
-  
 
-  
+
+
 
 
   return (
     <div className="App">
       <div className="editor">
-      <div className="toolbar">
+        <div className="toolbar">
 
-      <div className="heading-dropdown">
-  <IconButton onClick={(e) => setHeadingAnchorEl(e.currentTarget)}>
-    <Typography variant="body1">H</Typography>
-  </IconButton>
+          <div className="heading-dropdown">
+            <IconButton
+              style={{ width: 50 }}
+              onClick={(e) => setHeadingAnchorEl(e.currentTarget)}>
+              <Typography variant="body1"><b>H</b></Typography>
+            </IconButton>
 
-  <div className="heading-dropdown-content">
-    {[1, 2, 3, 4, 5, 6].map((level) => (
-      <MenuItem key={level} onClick={() => handleHeadingSelect(level)}>
-        <Typography variant={`h${level}`}>{`H${level}`}</Typography>
-      </MenuItem>
-    ))}
-  </div>
-</div>
-
-       
-
-
-
-
+            <div className="heading-dropdown-content">
+              {[1, 2, 3, 4, 5, 6].map((level) => (
+                <MenuItem key={level} onClick={() => handleHeadingSelect(level)}>
+                  <Typography variant={`h${level}`}>{`H${level}`}</Typography>
+                </MenuItem>
+              ))}
+            </div>
+          </div>
           <IconButton onClick={handleBoldClick}>
             <FormatBoldIcon />
           </IconButton>
@@ -316,18 +276,17 @@ function App() {
             <RedoIcon />
           </IconButton>
         </div>
-      <div className="editor-container">
-        <textarea ref={textareaRef} value={markdown} onChange={handleMarkdownChange} rows={10} cols={50} />
-      </div>
-      <div className="counts">
-        <span>Characters: {charCount}</span>
-        <span>Words: {wordCount}</span>
-      </div>
-      <div>
-        <button onClick={handleSaveClick}>Save</button>
-        <button onClick={handleClearClick}>Clear</button>
-      </div>
-      <ReactMarkdown>{markdown}</ReactMarkdown>
+        <div className="editor-container">
+          <textarea ref={textareaRef} value={markdown} onChange={handleMarkdownChange} rows={20} cols={20} />
+        </div>
+        <div className="counts">
+          <span>Characters: {charCount}</span>
+          <span>Words: {wordCount}</span>
+        </div>
+        <div className="clear">
+          <button onClick={handleClearClick}>Clear</button>
+        </div>
+        <ReactMarkdown>{markdown}</ReactMarkdown>
       </div>
     </div>
   );
