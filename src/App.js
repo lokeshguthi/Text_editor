@@ -15,8 +15,15 @@ import RedoIcon from '@mui/icons-material/Redo';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import './App.css';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
-function App() {
+import Button from '@mui/material/Button';
+
+import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+function App({ isOpen, onClose }) {
   const [markdown, setMarkdown] = useState('');
   const textareaRef = useRef();
   const [charCount, setCharCount] = useState(0);
@@ -180,13 +187,13 @@ function App() {
     insertTextAtCursor(tableText);
   };
 
-  const handleInsertImageClick = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = handleImageInsert;
-    input.click();
-  };
+  // const handleInsertImageClick = () => {
+  //   const input = document.createElement('input');
+  //   input.type = 'file';
+  //   input.accept = 'image/*';
+  //   input.onchange = handleImageInsert;
+  //   input.click();
+  // };
 
   const handleImageInsert = (e) => {
     const file = e.target.files[0];
@@ -218,6 +225,55 @@ function App() {
     }
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isImageUploadOpen, setImageUploadOpen] = useState(false);
+
+  const handleFileDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+      setSelectedFile(event.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileSelect = (event) => {
+    // You can implement file upload logic here
+    console.log(event.target.files);
+    // Close the modal after selecting the file
+    setImageUploadOpen(false);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleUpload = () => {
+    // Placeholder function for handling the file upload process
+    console.log('Uploading', selectedFile);
+    // Implement file upload logic here
+  };
+
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100',
+    minWidth: '500px',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 124,
+    p: 4,
+    textAlign: 'center',
+    outline: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  const handleInsertImageClick = () => {
+    // Open the modal for image upload
+    setImageUploadOpen(true);
+  };
 
 
 
@@ -226,6 +282,41 @@ function App() {
     <div className="App">
       <div className="editor">
         <div className="toolbar">
+          <div>  <Modal
+          open={isImageUploadOpen}
+          onClose={() => setImageUploadOpen(false)}
+          aria-labelledby="image-upload-modal"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalStyle} className="modalContent">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Insert Media
+            </Typography>
+            <div 
+              className="fileDropArea"
+              onDragOver={handleDragOver}
+              onDrop={handleFileDrop}
+            >
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Drop files to upload or
+                <button 
+                  className="fileInputButton" 
+                  onClick={() => document.getElementById('file-input').click()}
+                >
+                  Select Files
+                </button>
+                <input
+                  type="file"
+                  id="file-input"
+                  style={{ display: 'none' }}
+                  onChange={handleFileSelect}
+                  accept="image/*"
+                />
+              </Typography>
+            </div>
+            {/* Add more UI elements here as needed */}
+          </Box>
+        </Modal></div>
 
           <div className="heading-dropdown">
             <IconButton
